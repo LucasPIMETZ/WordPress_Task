@@ -38,7 +38,7 @@ class search_words_API extends WP_Widget {
             return;
         }
  
-        $posts = ( wp_remote_retrieve_body( $response ) );
+        $posts =  json_decode(wp_remote_retrieve_body( $response,'login' )) ;
  
         if( empty( $posts ) ) {
             return;
@@ -48,15 +48,16 @@ class search_words_API extends WP_Widget {
         if( !empty( $instance['title'] ) ) {
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
         }
-         
+		
+				//echo $posts;
+		//echo $response;
         //main widget content
         if( !empty( $posts ) ) {
          
-            echo '<ul>';
-//            foreach( $posts as $post ) {	
-                echo $posts;
-  //          }
-            echo '</ul>';
+            echo '<ul>';      
+            foreach( $posts as $post ) {
+                echo '<li>' . $post. '"</li> ';
+            }
              
         }
  
